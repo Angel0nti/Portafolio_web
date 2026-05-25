@@ -1,0 +1,61 @@
+.admin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.admin-box {
+  background-color: rgba(30, 41, 59, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 300px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.admin-box h2 {
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+}
+
+.admin-box input {
+  padding: 12px;
+  background-color: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.admin-box input:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
+
+.admin-box button {
+  background-color: #38bdf8;
+  color: #0f172a;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.admin-box button:hover {
+  background-color: #7dd3fc;
+}
+
+.error {
+  color: #f87171;
+  margin: 0;
+  text-align: center;
+  font-size: 0.9rem;
+}

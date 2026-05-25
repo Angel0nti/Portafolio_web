@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProjectsService } from '../../core/services/projects.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-projects',
@@ -11,6 +12,7 @@ import { ProjectsService } from '../../core/services/projects.service';
 })
 export class ProjectsComponent implements OnInit {
   private projectsService = inject(ProjectsService);
+  public authService = inject(AuthService);
 
   projects: any[] = [];
   showform = false;
@@ -46,8 +48,7 @@ export class ProjectsComponent implements OnInit {
         this.newUrl = '';
         this.showform = false;
       },
-      error: (err) => {
-        console.error('Failed to send project to backend:', err);
+      error: (_err: unknown) => {
         alert('Could not save to server. Is the backend running?');
       },
     });

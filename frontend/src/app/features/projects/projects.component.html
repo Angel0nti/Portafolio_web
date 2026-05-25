@@ -1,9 +1,11 @@
 <section class="projects-section">
   <div class="projects-header">
     <h3>My projects</h3>
-    <button (click)="showform = !showform">
-      {{ showform ? 'Cancel' : '+' }}
-    </button>
+    @if (authService.isLoggedIn()) {
+      <button (click)="showform = !showform">
+        {{ showform ? 'Cancel' : '+' }}
+      </button>
+    }
   </div>
 
   @if (showform) {

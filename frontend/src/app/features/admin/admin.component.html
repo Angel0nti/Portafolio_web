@@ -1,0 +1,10 @@
+<div class="admin-container">
+  <div class="admin-box">
+    <h2>Admin Access</h2>
+    <input type="password" placeholder="Password" [(ngModel)]="password" (keyup.enter)="login()" />
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+    <button (click)="login()">Enter</button>
+  </div>
+</div>
