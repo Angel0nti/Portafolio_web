@@ -1,52 +1,84 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const JWT_SECRET = process.env.JWT_SECRET!;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD!;
+const MONGODB_URI = process.env.MONGODB_URI!;
 
 // Middlewares
-app.use(cors()); // This line actives cors
-app.use(express.json()); // Allows the server understand data in JSON format
+app.use(cors());
+app.use(express.json());
 
 // Connection to the DB
 mongoose
-  .connect(
-    'mongodb+srv://angel2:capitanGeneral19@cluster0.cagdpnr.mongodb.net/portfolio?retryWrites=true&w=majority',
-  )
+  .connect(MONGODB_URI)
   .then(() => console.log('🍃 Connected successfully to MongoDB Atlas!'))
   .catch((err) => console.error('❌ MongoDB connection error:', err));
 
-// Create the squema (the blueprint for the projects)
+// Project Schema
 const ProjectSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
     url: { type: String, required: true },
   },
-  { timestamps: true }, // Automatically adds createdAt and updatedAt fields
+  { timestamps: true },
 );
-// Create the model (the tool to make queries)
 const ProjectModel = mongoose.model('Project', ProjectSchema);
 
-// Route 1: Health test route
+// Middleware to verify JWT token
+function verifyToken(req: Request, res: Response, next: NextFunction): void {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer <token>
+
+  if (!token) {
+    res.status(401).json({ error: 'No token provided' });
+    return;
+  }
+
+  try {
+    jwt.verify(token, JWT_SECRET);
+    next();
+  } catch {
+    res.status(403).json({ error: 'Invalid or expired token' });
+  }
+}
+
+// Route 1: Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend portfolio is online' });
 });
 
-// Route 2: Receive new projects from Angular (POST)
-app.post('/api/projects', async (req, res) => {
+// Route 2: Admin login
+app.post('/api/auth/login', (req, res) => {
+  const { password } = req.body;
+
+  if (password !== ADMIN_PASSWORD) {
+    res.status(401).json({ error: 'Invalid password' });
+    return;
+  }
+
+  const token = jwt.sign({ role: 'admin' }, JWT_SECRET, { expiresIn: '8h' });
+  res.json({ token });
+});
+
+// Route 3: Save new project (protected)
+app.post('/api/projects', verifyToken, async (req, res) => {
   try {
     const { title, description, url } = req.body;
     if (!title || !description || !url) {
-      res.status(400).json({ error: 'Missing reuired fields' });
+      res.status(400).json({ error: 'Missing required fields' });
       return;
     }
 
-    // Create a new document instance using our Moongose Model
     const newProject = new ProjectModel({ title, description, url });
-
-    // Save the document into the actual database async
     const savedProject = await newProject.save();
     console.log('Project saved in MongoDB:', savedProject);
     res
@@ -58,20 +90,18 @@ app.post('/api/projects', async (req, res) => {
   }
 });
 
-// Route 3: Get All Projects From MONGODB (GET)
+// Route 4: Get all projects
 app.get('/api/projects', async (req, res) => {
   try {
-    // ProjectModel.find() queries MongoDB and returns All documents in the collection
     const projects = await ProjectModel.find();
-
-    // Send the array of projects back to Angular with a 200 OK status
     res.status(200).json(projects);
   } catch (error) {
     console.error('Database query error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-// Start up the server
+
+// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
