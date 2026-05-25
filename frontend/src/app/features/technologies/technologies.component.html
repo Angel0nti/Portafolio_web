@@ -1,0 +1,11 @@
+<section class="section techs">
+  <h3>Technologies I know</h3>
+  <div class="badges-container">
+    @for (tech of technologies; track tech.name) {
+      <div class="tech-badge">
+        <i [class]="tech.iconClass"></i>
+        <span>{{ tech.name }}</span>
+      </div>
+    }
+  </div>
+</section>

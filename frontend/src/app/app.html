@@ -1,96 +1,13 @@
 <!-- To display the variables we just created in AppComponent inside D:\Programacion\Angel\Portafolio_web\frontend\src\app\app.ts, 
 Angular uses something called interpolation (the double curly braces {{ }}).-->
 <div class="cv-container">
-  <header class="header-profile">
-    <!-- we use double curly braces to use the variables we declared -->
-    <h1>Hi, I'm Ing. {{ name }}</h1>
-    <h2>{{ profession }}</h2>
-    <p>{{ whoamI }}</p>
-  </header>
+  <app-header />
   <hr />
-  <!-- Strengths section using Angular structural Loop -->
-  <section class="strengths-section">
-    <h3>My Strengths</h3>
-    <div class="strengths-grid">
-      <!-- The @for loop iterates through the strengths array -->
-      @for (item of strengths; track item.title) {
-        <div class="strength-card">
-          <h4>{{ item.title }}</h4>
-          <p>{{ item.definition }}</p>
-        </div>
-      }
-    </div>
-  </section>
+  <app-strengths />
   <hr />
-  <!-- Technologies section with logos -->
-  <section class="section techs">
-    <h3>Technologies I know</h3>
-    <div class="badges-container">
-      <!-- We loop through our technologies array -->
-      @for (tech of technologies; track tech.name) {
-        <div class="tech-badge">
-          <!-- The [class] notation binds the string from Typescript to the HTML -->
-          <i [class]="tech.iconClass"></i>
-          <span> {{ tech.name }} </span>
-        </div>
-      }
-    </div>
-  </section>
+  <app-technologies />
   <hr />
-  <!-- Project Portfolio Section -->
-  <section class="projects-section">
-    <div class="projects-header">
-      <h3>My projects</h3>
-      <!-- Thisbutton toggles the showForm variable between true and false -->
-      <button (click)="showform = !showform">
-        {{ showform ? 'Cancel' : '+' }}
-      </button>
-    </div>
-    <!-- The template conditional block: displays only when showForm is true -->
-    @if (showform) {
-      <div class="modal-form">
-        <h4>Add New Projects</h4>
-        <!-- Two-way data binding connections -->
-        <input type="text" placeholder="Project Title" [(ngModel)]="newTitle" />
-        <textarea placeholder="Project Description" [(ngModel)]="newDescription"></textarea>
-        <input type="text" placeholder="Project URL" [(ngModel)]="newUrl" />
-
-        <!-- Button triggers the saveProject function on click -->
-        <button (click)="saveProject()">Save Project</button>
-      </div>
-    }
-    <!-- Grid to render the active project cards -->
-    <div class="projects-grid">
-      @for (proj of projects; track proj.title) {
-        <div class="projects-card" (click)="goToProject(proj.url)">
-          <h4>{{ proj.title }}</h4>
-          <p>{{ proj.description }}</p>
-          <small>Link: {{ proj.url }} </small>
-        </div>
-      }
-    </div>
-  </section>
+  <app-projects />
   <hr />
-  <!-- Contact Section -->
-  <section class="contact-section">
-    <h3>Connect with Me</h3>
-    <p>I am open to job opportunities.</p>
-    <div class="contact-links">
-      <!-- Email Link -->
-      <a [href]="'mailto:' + contactInfo.email" class="contact-item email">
-        <i class="devicon-google-plain"></i>
-        <span>Email</span>
-      </a>
-      <!-- LinkedIn Link (opens in a new tab) -->
-      <a [href]="contactInfo.linkedinUrl" target="_blank" class="contact-item linkedin">
-        <i class="devicon-linkedin-plain"></i>
-        <span>LinkedIn</span>
-      </a>
-      <!-- WhatsApp Link (opens in a new tab) -->
-      <a [href]="contactInfo.whatsappUrl" target="_blank" class="contact-item whatsapp">
-        <i class="fab fa-whatsapp"></i>
-        <span>WhatsApp</span>
-      </a>
-    </div>
-  </section>
+  <app-contact />
 </div>

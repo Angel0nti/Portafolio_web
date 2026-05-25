@@ -1,0 +1,43 @@
+/* --- Technologies Badges Styles --- */
+.badges-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.tech-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #f1f5f9;
+  transition: background-color 0.2s;
+}
+
+.tech-badge:hover {
+  background-color: #334155;
+}
+
+.tech-badge i {
+  font-size: 1.4rem;
+}
+@media (max-width: 600px) {
+  .badges-container {
+    gap: 8px;
+  }
+
+  .tech-badge {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+  }
+
+  .tech-badge i {
+    font-size: 1.2rem;
+  }
+}

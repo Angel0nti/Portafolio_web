@@ -1,0 +1,11 @@
+<section class="strengths-section">
+  <h3>My Strengths</h3>
+  <div class="strengths-grid">
+    @for (item of strengths; track item.title) {
+      <div class="strength-card">
+        <h4>{{ item.title }}</h4>
+        <p>{{ item.definition }}</p>
+      </div>
+    }
+  </div>
+</section>

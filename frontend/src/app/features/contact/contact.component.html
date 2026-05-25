@@ -1,0 +1,18 @@
+<section class="contact-section">
+  <h3>Connect with Me</h3>
+  <p>I am open to job opportunities.</p>
+  <div class="contact-links">
+    <a [href]="'mailto:' + contactInfo.email" class="contact-item email">
+      <i class="devicon-google-plain"></i>
+      <span>Email</span>
+    </a>
+    <a [href]="contactInfo.linkedinUrl" target="_blank" class="contact-item linkedin">
+      <i class="devicon-linkedin-plain"></i>
+      <span>LinkedIn</span>
+    </a>
+    <a [href]="contactInfo.whatsappUrl" target="_blank" class="contact-item whatsapp">
+      <i class="fab fa-whatsapp"></i>
+      <span>WhatsApp</span>
+    </a>
+  </div>
+</section>

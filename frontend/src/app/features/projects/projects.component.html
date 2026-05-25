@@ -1,0 +1,28 @@
+<section class="projects-section">
+  <div class="projects-header">
+    <h3>My projects</h3>
+    <button (click)="showform = !showform">
+      {{ showform ? 'Cancel' : '+' }}
+    </button>
+  </div>
+
+  @if (showform) {
+    <div class="modal-form">
+      <h4>Add New Projects</h4>
+      <input type="text" placeholder="Project Title" [(ngModel)]="newTitle" />
+      <textarea placeholder="Project Description" [(ngModel)]="newDescription"></textarea>
+      <input type="text" placeholder="Project URL" [(ngModel)]="newUrl" />
+      <button (click)="saveProject()">Save Project</button>
+    </div>
+  }
+
+  <div class="projects-grid">
+    @for (proj of projects; track proj.title) {
+      <div class="projects-card" (click)="goToProject(proj.url)">
+        <h4>{{ proj.title }}</h4>
+        <p>{{ proj.description }}</p>
+        <small>Link: {{ proj.url }}</small>
+      </div>
+    }
+  </div>
+</section>
