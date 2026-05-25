@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
 
   // HTTP GET function to takes all the data from MongoDB
   loadProjects() {
-    this.http.get<any[]>('http://localhost:5000/api/projects').subscribe({
+    this.http.get<any[]>('https://portafolio-web-nu-one.vercel.app/api/projects').subscribe({
       next: (data) => {
         // We replace our empty array with the real live database projects
         this.projects = data;
@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
 
     // We make the HTTP request POST to the backend
     // Angular http requests use Observables, so we must call .subscribe() to execute them
-    this.http.post('http://localhost:5000/api/projects', projectData).subscribe({
+    this.http.post('https://portafolio-web-nu-one.vercel.app/api/projects', projectData).subscribe({
       next: (response) => {
         console.log('Project successfully saved in backend', response);
 
