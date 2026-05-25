@@ -25,6 +25,27 @@ h3 {
   backdrop-filter: blur(10px);
 }
 
+.logout-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.logout-btn {
+  background-color: #f87171;
+  color: #0f172a;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #fca5a5;
+}
+
 hr {
   border: 0;
   height: 1px;
