@@ -1,0 +1,10 @@
+# Ignores node_Modules
+node_modules/
+
+# Ignorar archivos de compilación de TypeScript y Angular
+dist/
+.angular/
+out-tsc/
+
+# Ignorar contraseñas y variables de entorno secretas
+.env
