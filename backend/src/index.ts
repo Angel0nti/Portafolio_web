@@ -101,6 +101,37 @@ app.get('/api/projects', async (req, res) => {
   }
 });
 
+// Route 5: Delete a project (protected)
+app.delete('/api/projects/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await ProjectModel.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Project deleted successfully' });
+  } catch (error) {
+    console.error('Delete error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Route 6: Update a project (protected)
+app.patch('/api/projects/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, url } = req.body;
+    const updated = await ProjectModel.findByIdAndUpdate(
+      id,
+      { title, description, url },
+      { new: true },
+    );
+    res
+      .status(200)
+      .json({ message: 'Project updated successfully', data: updated });
+  } catch (error) {
+    console.error('Update error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
