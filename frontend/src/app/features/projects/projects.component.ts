@@ -20,6 +20,12 @@ export class ProjectsComponent implements OnInit {
   newDescription = '';
   newUrl = '';
 
+  // Edit state
+  editingId: string | null = null;
+  editTitle = '';
+  editDescription = '';
+  editUrl = '';
+
   ngOnInit() {
     this.projectsService.getProjects().subscribe({
       next: (data) => (this.projects = data),
@@ -51,6 +57,46 @@ export class ProjectsComponent implements OnInit {
       error: (_err: unknown) => {
         alert('Could not save to server. Is the backend running?');
       },
+    });
+  }
+
+  deleteProject(id: string) {
+    if (!confirm('Are you sure you want to delete this project?')) return;
+
+    this.projectsService.deleteProject(id).subscribe({
+      next: () => {
+        this.projects = this.projects.filter((p) => p._id !== id);
+      },
+      error: (_err: unknown) => alert('Could not delete project.'),
+    });
+  }
+
+  startEdit(proj: any) {
+    this.editingId = proj._id;
+    this.editTitle = proj.title;
+    this.editDescription = proj.description;
+    this.editUrl = proj.url;
+  }
+
+  cancelEdit() {
+    this.editingId = null;
+  }
+
+  saveEdit() {
+    if (!this.editTitle || !this.editDescription || !this.editUrl) {
+      alert('Please fill out all fields');
+      return;
+    }
+
+    const updated = { title: this.editTitle, description: this.editDescription, url: this.editUrl };
+
+    this.projectsService.updateProject(this.editingId!, updated).subscribe({
+      next: () => {
+        const index = this.projects.findIndex((p) => p._id === this.editingId);
+        this.projects[index] = { ...this.projects[index], ...updated };
+        this.editingId = null;
+      },
+      error: (_err: unknown) => alert('Could not update project.'),
     });
   }
 

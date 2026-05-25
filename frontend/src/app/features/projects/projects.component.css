@@ -120,6 +120,77 @@
   font-weight: bold;
   color: #10b981;
 }
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.edit-btn {
+  background-color: #38bdf8;
+  color: #0f172a;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.edit-btn:hover {
+  background-color: #7dd3fc;
+}
+
+.delete-btn {
+  background-color: #f87171;
+  color: #0f172a;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #fca5a5;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.save-btn {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+  background-color: #059669;
+}
+
+.cancel-btn {
+  background-color: #64748b;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #475569;
+}
 @media (max-width: 600px) {
   .modal-form {
     padding: 15px;

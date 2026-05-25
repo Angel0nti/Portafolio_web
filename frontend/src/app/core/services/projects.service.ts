@@ -22,4 +22,11 @@ export class ProjectsService {
   saveProject(project: { title: string; description: string; url: string }) {
     return this.http.post(this.apiUrl, project, { headers: this.getAuthHeaders() });
   }
+  deleteProject(id: string) {
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
+  }
+
+  updateProject(id: string, project: { title: string; description: string; url: string }) {
+    return this.http.patch(`${this.apiUrl}/${id}`, project, { headers: this.getAuthHeaders() });
+  }
 }

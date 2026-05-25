@@ -10,7 +10,7 @@
 
   @if (showform) {
     <div class="modal-form">
-      <h4>Add New Projects</h4>
+      <h4>Add New Project</h4>
       <input type="text" placeholder="Project Title" [(ngModel)]="newTitle" />
       <textarea placeholder="Project Description" [(ngModel)]="newDescription"></textarea>
       <input type="text" placeholder="Project URL" [(ngModel)]="newUrl" />
@@ -19,11 +19,29 @@
   }
 
   <div class="projects-grid">
-    @for (proj of projects; track proj.title) {
-      <div class="projects-card" (click)="goToProject(proj.url)">
-        <h4>{{ proj.title }}</h4>
-        <p>{{ proj.description }}</p>
-        <small>Link: {{ proj.url }}</small>
+    @for (proj of projects; track proj._id) {
+      <div class="projects-card">
+        @if (editingId === proj._id) {
+          <input type="text" [(ngModel)]="editTitle" />
+          <textarea [(ngModel)]="editDescription"></textarea>
+          <input type="text" [(ngModel)]="editUrl" />
+          <div class="edit-actions">
+            <button class="save-btn" (click)="saveEdit()">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+          </div>
+        } @else {
+          <div (click)="goToProject(proj.url)">
+            <h4>{{ proj.title }}</h4>
+            <p>{{ proj.description }}</p>
+            <small>Link: {{ proj.url }}</small>
+          </div>
+          @if (authService.isLoggedIn()) {
+            <div class="card-actions">
+              <button class="edit-btn" (click)="startEdit(proj)">Edit</button>
+              <button class="delete-btn" (click)="deleteProject(proj._id)">Delete</button>
+            </div>
+          }
+        }
       </div>
     }
   </div>
