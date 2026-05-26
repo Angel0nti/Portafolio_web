@@ -91,6 +91,9 @@
   transition:
     transform 0.2s,
     box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .strength-card:hover {
@@ -109,6 +112,7 @@
   font-size: 0.95rem;
   line-height: 1.5;
   color: #94a3b8;
+  flex: 1;
 }
 
 .strength-card input,
@@ -129,6 +133,13 @@
 .strength-card textarea:focus {
   outline: none;
   border-color: #38bdf8;
+}
+
+.strength-card hr {
+  border: 0;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.08);
+  margin: 8px 0 12px 0;
 }
 
 .card-actions {
