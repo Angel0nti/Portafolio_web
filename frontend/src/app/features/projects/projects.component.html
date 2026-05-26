@@ -18,6 +18,13 @@
     </div>
   }
 
+  @if (loading) {
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p>loading projects...</p>
+    </div>
+  }
+
   <div class="projects-grid">
     @for (proj of projects; track proj._id) {
       <div class="projects-card">

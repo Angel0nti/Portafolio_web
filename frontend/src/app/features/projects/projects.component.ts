@@ -14,6 +14,7 @@ export class ProjectsComponent implements OnInit {
   private projectsService = inject(ProjectsService);
   public authService = inject(AuthService);
 
+  loading = true;
   projects: any[] = [];
   showform = false;
   newTitle = '';
@@ -28,8 +29,14 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit() {
     this.projectsService.getProjects().subscribe({
-      next: (data) => (this.projects = data),
-      error: (err) => console.log('Could not fetch projects from database:', err),
+      next: (data) => {
+        this.projects = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.log('Could not fetch projects from database:', err);
+        this.loading = false;
+      },
     });
   }
 

@@ -53,3 +53,27 @@
   transform: translateY(-4px);
   box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); /* Green glow effect on hover */
 }
+.cv-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 25px;
+  padding: 12px 28px;
+  background-color: #38bdf8;
+  color: #0f172a;
+  border-radius: 30px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.cv-download:hover {
+  background-color: #7dd3fc;
+  transform: translateY(-3px);
+}
+
+.cv-download i {
+  font-size: 1.2rem;
+}
