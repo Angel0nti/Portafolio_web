@@ -1,10 +1,50 @@
 <section class="strengths-section">
-  <h3>My Strengths</h3>
+  <div class="strengths-header">
+    <h3>My Strengths</h3>
+    @if (authService.isLoggedIn()) {
+      <button (click)="showform = !showform">
+        {{ showform ? 'Cancel' : '+' }}
+      </button>
+    }
+  </div>
+
+  @if (showform) {
+    <div class="modal-form">
+      <h4>Add New Strength</h4>
+      <input type="text" placeholder="Title" [(ngModel)]="newTitle" />
+      <textarea placeholder="Definition" [(ngModel)]="newDefinition"></textarea>
+      <button (click)="saveStrength()">Save Strength</button>
+    </div>
+  }
+
+  @if (loading) {
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p>Loading strengths...</p>
+    </div>
+  }
+
   <div class="strengths-grid">
-    @for (item of strengths; track item.title) {
+    @for (item of strengths; track item._id) {
       <div class="strength-card">
-        <h4>{{ item.title }}</h4>
-        <p>{{ item.definition }}</p>
+        @if (editingId === item._id) {
+          <input type="text" [(ngModel)]="editTitle" />
+          <textarea [(ngModel)]="editDefinition"></textarea>
+          <div class="edit-actions">
+            <button class="save-btn" (click)="saveEdit()">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+          </div>
+        } @else {
+          <h4>{{ item.title }}</h4>
+          <hr />
+          <p>{{ item.definition }}</p>
+          @if (authService.isLoggedIn()) {
+            <div class="card-actions">
+              <button class="edit-btn" (click)="startEdit(item)">Edit</button>
+              <button class="delete-btn" (click)="deleteStrength(item._id)">Delete</button>
+            </div>
+          }
+        }
       </div>
     }
   </div>
