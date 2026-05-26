@@ -3,6 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { title } from 'node:process';
 
 dotenv.config();
 
@@ -32,6 +33,16 @@ const ProjectSchema = new mongoose.Schema(
   { timestamps: true },
 );
 const ProjectModel = mongoose.model('Project', ProjectSchema);
+
+// Strength Schema
+const StrengthSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    definition: { type: String, required: true },
+  },
+  { timestamps: true },
+);
+const StrengthModel = mongoose.model('Strength', StrengthSchema);
 
 // Middleware to verify JWT token
 function verifyToken(req: Request, res: Response, next: NextFunction): void {
@@ -129,6 +140,63 @@ app.patch('/api/projects/:id', verifyToken, async (req, res) => {
   } catch (error) {
     console.error('Update error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Strengths Routes
+// Route 1 Get all Strengths
+app.get('/api/strengths', async (req, res) => {
+  try {
+    const strengths = await StrengthModel.find();
+    res.status(200).json(strengths);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Route 2 Create a Strength
+app.post('/api/strengths', verifyToken, async (req, res) => {
+  try {
+    const { title, definition } = req.body;
+    if (!title || !definition) {
+      res.status(400).json({ error: 'Missing required fields' });
+      return;
+    }
+    const newStrength = new StrengthModel({ title, definition });
+    const saved = await newStrength.save();
+    res.status(201).json({ message: 'Strength saved', data: saved });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Route 3 Update a Strength
+app.patch('/api/strengths/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, definition } = req.body;
+    const updated = await StrengthModel.findByIdAndUpdate(
+      id,
+      {
+        title,
+        definition,
+      },
+      { new: true },
+    );
+    res.status(200).json({ message: 'Strenght updated', data: updated });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Route 4 Delete a Strength
+app.delete('/api/strengths/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await StrengthModel.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Strength deleted' });
+  } catch (error) {
+    res.status(500).json({ erro: 'Internal Server Error' });
   }
 });
 
