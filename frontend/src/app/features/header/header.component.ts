@@ -11,5 +11,5 @@ export class HeaderComponent {
   profession = 'Full Stack Software Developer Jr.';
   photoUrl = '/Angel.png';
   whoamI =
-    'I am a Junior Full-Stack Developer with foundations in JavaScript, HTML, and CSS, along with practical experience in Angular, TypeScript, Node.js, MongoDB, and SQL. Although I do not have formal professional experience yet, I am highly motivated, and genuinely excited about growth opportunities in the software industry.';
+    'As a Junior Full-Stack Developer starting my professional journey, I am driven by curiosity and a desire to learn from experienced teams. I am looking for a growth-oriented opportunity where I can apply my web development foundations, face new challenges, and evolve into a stronger professional';
 }
