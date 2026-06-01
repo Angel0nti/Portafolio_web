@@ -138,7 +138,7 @@ app.patch('/api/projects/:id', verifyToken, async (req, res) => {
       .status(200)
       .json({ message: 'Project updated successfully', data: updated });
   } catch (error) {
-    console.error('Update error:', error);
+    console.error('Project update error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
