@@ -24,7 +24,7 @@ export class AdminComponent {
       },
       error: (err: any) => {
         if (err.status === 429) {
-          this.error = 'Too many attempts. Try again in 15 minutes.';
+          this.error = 'Too many attempts. Try again in 16 minutes.';
         } else {
           this.error = 'Invalid password';
         }
