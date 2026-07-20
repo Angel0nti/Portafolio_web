@@ -3,7 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { title } from 'node:process';
+import rateLimit from 'express-rate-limit';
 
 dotenv.config();
 
@@ -17,11 +17,20 @@ const MONGODB_URI = process.env.MONGODB_URI!;
 app.use(cors());
 app.use(express.json());
 
-// Connection to the DB
+// limit rater
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5,
+  message: { error: 'Too many login attempts. Try again in 15 minutes' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Connection to my DB
 mongoose
   .connect(MONGODB_URI)
-  .then(() => console.log('🍃 Connected successfully to MongoDB Atlas!'))
-  .catch((err) => console.error('❌ MongoDB connection error:', err));
+  .then(() => console.log('¡Connected successfully to MongoDB Atlas!'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 // Project Schema
 const ProjectSchema = new mongoose.Schema(
@@ -64,11 +73,11 @@ function verifyToken(req: Request, res: Response, next: NextFunction): void {
 
 // Route 1: Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Backend portfolio is online' });
+  res.json({ status: 'ok', message: 'Portfolio is online' });
 });
 
 // Route 2: Admin login
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', loginLimiter, (req, res) => {
   const { password } = req.body;
 
   if (password !== ADMIN_PASSWORD) {
@@ -92,9 +101,7 @@ app.post('/api/projects', verifyToken, async (req, res) => {
     const newProject = new ProjectModel({ title, description, url });
     const savedProject = await newProject.save();
     console.log('Project saved in MongoDB:', savedProject);
-    res
-      .status(201)
-      .json({ message: 'Project saved permanently', data: savedProject });
+    res.status(201).json({ message: 'Project saved', data: savedProject });
   } catch (error) {
     console.error('Database insertion error:', error);
     res.status(500).json({ error: 'Internal Server Error' });

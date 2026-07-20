@@ -19,8 +19,16 @@ export class AdminComponent {
 
   login() {
     this.authService.login(this.password).subscribe({
-      next: () => this.router.navigate(['/']),
-      error: (_err: unknown) => (this.error = 'Invalid password'),
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (err: any) => {
+        if (err.status === 429) {
+          this.error = 'Too many attempts. Try again in 15 minutes.';
+        } else {
+          this.error = 'Invalid password';
+        }
+      },
     });
   }
 }
