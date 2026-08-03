@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AdminComponent } from './features/admin/admin.component';
 
 export const routes: Routes = [
-  { path: 'tilincv', component: AdminComponent },
+  { path: 'tilincv', component: AdminComponent }, // ruta admin
   {
     path: '',
     loadComponent: () =>
