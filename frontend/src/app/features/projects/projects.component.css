@@ -96,6 +96,8 @@
   transition:
     transform 0.2s,
     box-shadow 0.2s;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .projects-card:hover {
@@ -107,6 +109,7 @@
   margin: 0 0 8px 0;
   font-size: 1.3rem;
   color: #ffffff;
+  overflow-wrap: break-word;
 }
 
 .projects-card p {
@@ -114,11 +117,16 @@
   font-size: 0.95rem;
   color: #94a3b8;
   line-height: 1.5;
+  overflow-wrap: break-word;
 }
 
 .projects-card small {
+  display: block;
   font-weight: bold;
   color: #10b981;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  max-width: 100%;
 }
 .projects-card input,
 .projects-card textarea {
