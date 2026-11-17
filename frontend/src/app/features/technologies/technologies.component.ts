@@ -16,5 +16,6 @@ export class TechnologiesComponent {
     { name: 'Node.js', iconClass: 'devicon-nodejs-plain colored' },
     { name: 'Express', iconClass: 'devicon-express-original colored' },
     { name: 'MongoDB', iconClass: 'devicon-mongodb-plain colored' },
+    { name: 'AWS', iconClass: 'devicon-amazonwebservices-plain-wordmark colored' },
   ];
 }
